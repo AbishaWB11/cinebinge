@@ -22,7 +22,9 @@ function Header({ openWatchlist, isOpen, onLogout, goHome }) {
                 >
                     <span className="sm:hidden">
                         <Bookmark size={20} />
+    
                     </span>
+                    <span className="hidden sm:inline">Watchlist</span>
                 </button>
 
                 <button
@@ -32,6 +34,7 @@ function Header({ openWatchlist, isOpen, onLogout, goHome }) {
                     <span className="sm:hidden">
                         <LogOut size={20} />
                     </span>
+                    <span className="hidden sm:inline">Logout</span>
                 </button>
 
             </div>
