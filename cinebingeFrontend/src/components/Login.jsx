@@ -1,4 +1,5 @@
 import { useState } from "react";
+const BASE_URL = "https://cinebinge-jc5s.onrender.com";
 
 function Login({ setIsLoggedIn, goToSignup }) {
     const [email, setEmail] = useState("");

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAuthToken } from "../utils/auth";
+const BASE_URL = "https://cinebinge-jc5s.onrender.com";
 
 function Watchlist({ isOpen, close, refreshKey }) {
     const [watchlist, setWatchlist] = useState([]);
@@ -17,7 +18,7 @@ function Watchlist({ isOpen, close, refreshKey }) {
                     return;
                 }
 
-                const res = await fetch("http://localhost:5000/api/watchlist", {
+                const res = await fetch("${BASE_URL}/api/watchlist", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
