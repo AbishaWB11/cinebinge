@@ -9,27 +9,28 @@ function Login({ setIsLoggedIn, goToSignup }) {
         try {
             setError("");
 
-            const res = await fetchfetch("https://cinebinge-jc5s.onrender.com/api/auth/login", {
+            const res = await fetch(`${BASE_URL}/api/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({
+                    email,
+                    password
+                })
             });
 
             const data = await res.json();
 
-            // ✅ SUCCESS
-            if (data.token) {
+            if (res.ok && data.token) {
                 localStorage.setItem("token", data.token);
                 setIsLoggedIn(true);
-            }
-            // ❌ FAIL
-            else {
+            } else {
                 setError(data.message || "Login failed");
             }
 
         } catch (err) {
+            console.log(err);
             setError("Server error");
         }
     };
@@ -60,10 +61,8 @@ function Login({ setIsLoggedIn, goToSignup }) {
                 Login
             </button>
 
-            {/* ❌ ERROR MESSAGE */}
             {error && <p className="text-red-400 mt-3">{error}</p>}
 
-            {/* 👉 SIGNUP NAV */}
             <p
                 onClick={goToSignup}
                 className="mt-4 text-blue-400 cursor-pointer"

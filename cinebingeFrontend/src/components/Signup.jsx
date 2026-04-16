@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 function Signup({ goToLogin }) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -12,7 +14,12 @@ function Signup({ goToLogin }) {
             setError("");
             setSuccess("");
 
-            const res = await fetch("https://cinebinge-jc5s.onrender.com/api/auth/signup", {
+            if (!name || !email || !password) {
+                setError("All fields are required");
+                return;
+            }
+
+            const res = await fetch(`${BASE_URL}/api/auth/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -22,16 +29,15 @@ function Signup({ goToLogin }) {
 
             const data = await res.json();
 
-            // ✅ SUCCESS
-            if (res.status === 201) {
-                setSuccess("Signup successful. Please login.");
-            }
-            // ❌ FAIL
-            else {
+            if (res.ok) {
+                setSuccess("Signup successful. Redirecting...");
+                setTimeout(() => goToLogin(), 1500);
+            } else {
                 setError(data.message || "Signup failed");
             }
 
         } catch (err) {
+            console.log(err);
             setError("Server error");
         }
     };
@@ -67,13 +73,9 @@ function Signup({ goToLogin }) {
                 Signup
             </button>
 
-            {/* ❌ ERROR */}
             {error && <p className="text-red-400 mt-3">{error}</p>}
-
-            {/* ✅ SUCCESS */}
             {success && <p className="text-green-400 mt-3">{success}</p>}
 
-            {/* 👉 BACK TO LOGIN */}
             <p
                 onClick={goToLogin}
                 className="mt-4 text-blue-400 cursor-pointer"
