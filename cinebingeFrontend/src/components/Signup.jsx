@@ -37,7 +37,7 @@ function Signup({ goToLogin }) {
     };
 
     return (
-        <div className="min-h-screen flex flex-col justify-center items-center bg-[#0a0a1a] text-white">
+        <div className="min-h-screen flex flex-col justify-center items-center bg-white text-white rounded p-8">
 
             <h1 className="text-3xl mb-6">Signup</h1>
 
