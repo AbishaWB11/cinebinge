@@ -1,83 +1,93 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupSchema } from "../schemas/authSchema";
+
 const BASE_URL = "https://cinebinge-jc5s.onrender.com";
 
 function Signup({ goToLogin }) {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm({
+        resolver: zodResolver(signupSchema),
+    });
 
-    const handleSignup = async () => {
+    const onSubmit = async (formData) => {
         try {
-            setError("");
-            setSuccess("");
-
-            if (!name || !email || !password) {
-                setError("All fields are required");
-                return;
-            }
-
             const res = await fetch(`${BASE_URL}/api/auth/signup`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ name, email, password })
+                body: JSON.stringify(formData),
             });
 
             const data = await res.json();
 
             if (res.ok) {
-                setSuccess("Signup successful. Redirecting...");
+                alert("Signup successful! Please login.");
                 setTimeout(() => goToLogin(), 1500);
             } else {
-                setError(data.message || "Signup failed");
+                alert(data.message || "Signup failed");
             }
-
         } catch (err) {
             console.log(err);
-            setError("Server error");
+            alert("Server error");
         }
     };
 
     return (
-        <div className="min-h-screen flex flex-col justify-center items-center bg-white text-white rounded p-8">
+        <div className="min-h-screen flex flex-col justify-center items-center bg-white p-8">
 
-            <h1 className="text-3xl mb-6">Signup</h1>
+            <h1 className="text-3xl mb-6 text-black">Signup</h1>
 
-            <input
-                placeholder="Name"
-                className="mb-3 p-2 w-64 text-black rounded"
-                onChange={(e) => setName(e.target.value)}
-            />
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
 
-            <input
-                placeholder="Email"
-                className="mb-3 p-2 w-64 text-black rounded"
-                onChange={(e) => setEmail(e.target.value)}
-            />
+                {/* Name */}
+                <input
+                    {...register("name")}
+                    placeholder="Name"
+                    className="mb-2 p-2 w-64 border rounded"
+                />
+                <p className="text-red-500 text-sm mb-2">
+                    {errors.name?.message}
+                </p>
 
-            <input
-                type="password"
-                placeholder="Password"
-                className="mb-3 p-2 w-64 text-black rounded"
-                onChange={(e) => setPassword(e.target.value)}
-            />
+                {/* Email */}
+                <input
+                    {...register("email")}
+                    placeholder="Email"
+                    className="mb-2 p-2 w-64 border rounded"
+                />
+                <p className="text-red-500 text-sm mb-2">
+                    {errors.email?.message}
+                </p>
 
-            <button
-                onClick={handleSignup}
-                className="bg-gradient-to-r from-purple-700 to-blue-600 px-6 py-2 rounded"
-            >
-                Signup
-            </button>
+                {/* Password */}
+                <input
+                    {...register("password")}
+                    type="password"
+                    placeholder="Password"
+                    className="mb-2 p-2 w-64 border rounded"
+                />
+                <p className="text-red-500 text-sm mb-2">
+                    {errors.password?.message}
+                </p>
 
-            {error && <p className="text-red-400 mt-3">{error}</p>}
-            {success && <p className="text-green-400 mt-3">{success}</p>}
+                <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="bg-gradient-to-r from-purple-700 to-blue-600 px-6 py-2 rounded text-white mt-2"
+                >
+                    {isSubmitting ? "Signing up..." : "Signup"}
+                </button>
+
+            </form>
 
             <p
                 onClick={goToLogin}
-                className="mt-4 text-blue-400 cursor-pointer"
+                className="mt-4 text-blue-500 cursor-pointer"
             >
                 Already have an account? Login
             </p>
