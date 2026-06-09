@@ -59,7 +59,7 @@ function Hero({ apiKey, onPick }) {
                             onClick={onPick}
                             className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-700 rounded"
                         >
-                            Pick For Me
+                            Surprise Me
                         </button>
 
                         <button

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { getAuthToken } from "../utils/auth";
+import { API_URL } from "../config/api";
 
-const BASE_URL = "https://cinebinge-jc5s.onrender.com";
+const BASE_URL = API_URL;
 
 function Watchlist({ isOpen, close, refreshKey }) {
     const [watchlist, setWatchlist] = useState([]);

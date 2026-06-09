@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "../schemas/authSchema";
+import { API_URL } from "../config/api";
 
-const BASE_URL = "https://cinebinge-jc5s.onrender.com";
+const BASE_URL = API_URL;
 
 function Signup({ goToLogin }) {
     const {
