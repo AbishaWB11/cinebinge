@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../schemas/authSchema";
+import { API_URL } from "../config/api";
 
 const BASE_URL = API_URL;
 
@@ -69,7 +70,7 @@ function Login({ setIsLoggedIn, goToSignup }) {
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-gradient-to-r from-purple-700 to-blue-600 px-6 py-2 rounded text-white mt-2"
+                    className="bg-linear-to-r from-purple-700 to-blue-600 px-6 py-2 rounded text-white mt-2"
                 >
                     {isSubmitting ? "Logging in..." : "Login"}
                 </button>

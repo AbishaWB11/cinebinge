@@ -91,7 +91,7 @@ function Watchlist({ isOpen, close, refreshKey }) {
             )}
 
             <div
-                className={`fixed right-0 top-0 w-[340px] h-full bg-white/10 backdrop-blur-xl border-l border-white/10 shadow-2xl z-50 transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"
+                className={`fixed right-0 top-0 w-85 h-full bg-white/10 backdrop-blur-xl border-l border-white/10 shadow-2xl z-50 transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"
                     }`}
             >
                 {/* Header */}

@@ -79,7 +79,7 @@ function Signup({ goToLogin }) {
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-gradient-to-r from-purple-700 to-blue-600 px-6 py-2 rounded text-white mt-2"
+                    className="bg-linear-to-r from-purple-700 to-blue-600 px-6 py-2 rounded text-white mt-2"
                 >
                     {isSubmitting ? "Signing up..." : "Signup"}
                 </button>
