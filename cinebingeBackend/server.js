@@ -9,18 +9,30 @@ const app = express();
 
 // CORS Configuration
 const corsOptions = {
-    origin: [
-        "https://cinebinge-ff8y.onrender.com",
-        "https://cinebinge1.vercel.app",
-        "http://localhost:5173",
-        "http://localhost:3000"
-    ],
+    origin: function(origin, callback) {
+        const allowedOrigins = [
+            "https://cinebinge-ff8y.onrender.com",
+            "https://cinebinge1.vercel.app",
+            "http://localhost:5173",
+            "http://localhost:3000"
+        ];
+        
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    allowedHeaders: ["Content-Type", "Authorization"],
+    optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
+
+// Explicit OPTIONS handler for preflight
+app.options("*", cors(corsOptions));
 app.use(express.json());
 
 // DB
