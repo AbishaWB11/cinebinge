@@ -1,1 +1,1 @@
-export const API_URL = "https://cinebinge-backend.onrender.com";
+export const API_URL = "https://cinebinge-ff8y.onrender.com";
